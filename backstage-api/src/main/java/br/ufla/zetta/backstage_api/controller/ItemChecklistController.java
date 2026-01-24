@@ -1,0 +1,47 @@
+package br.ufla.zetta.backstage_api.controller;
+
+import br.ufla.zetta.backstage_api.model.ItemChecklist;
+import br.ufla.zetta.backstage_api.model.StatusItem;
+import br.ufla.zetta.backstage_api.service.ItemChecklistService;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+@RestController
+@RequestMapping("/api/itens")
+@Tag(name = "Itens Checklist", description = "Gerenciamento de itens de checklist")
+public class ItemChecklistController {
+
+    private final ItemChecklistService itemService;
+
+    public ItemChecklistController(ItemChecklistService itemService) {
+        this.itemService = itemService;
+    }
+
+    @PostMapping
+    public ResponseEntity<ItemChecklist> adicionarItem(@Valid @RequestBody ItemChecklist item, @RequestParam Long eventoId) {
+        ItemChecklist novoItem = itemService.adicionarItem(item, eventoId);
+        return ResponseEntity.status(HttpStatus.CREATED).body(novoItem);
+    }
+
+    @GetMapping("/evento/{eventoId}")
+    public ResponseEntity<List<ItemChecklist>> listarItens(@PathVariable Long eventoId) {
+        return ResponseEntity.ok(itemService.listarItensDoEvento(eventoId));
+    }
+
+    @PatchMapping("/{id}/status")
+    public ResponseEntity<ItemChecklist> atualizarStatus(@PathVariable Long id, @RequestParam StatusItem status) {
+        ItemChecklist itemAtualizado = itemService.atualizarStatus(id, status);
+        return ResponseEntity.ok(itemAtualizado);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> excluirItem(@PathVariable Long id) {
+        itemService.excluirItem(id);
+        return ResponseEntity.noContent().build();
+    }
+}
