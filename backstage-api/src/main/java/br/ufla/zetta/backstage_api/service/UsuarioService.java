@@ -27,7 +27,7 @@ public class UsuarioService {
                 .orElseThrow(() -> new IllegalArgumentException("Produtor não encontrado."));
     }
 
-    /*public Usuario autenticar(String email, String senha) {
+    public Usuario autenticar(String email, String senha) {
         Usuario usuario = usuarioRepository.findByEmail(email)
                 .orElseThrow(() -> new IllegalArgumentException("Email ou senha inválidos"));
 
@@ -36,5 +36,5 @@ public class UsuarioService {
         }
 
         return usuario;
-    }*/
+    }
 }

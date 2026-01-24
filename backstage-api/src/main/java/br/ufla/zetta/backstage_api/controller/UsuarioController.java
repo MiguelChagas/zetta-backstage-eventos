@@ -7,7 +7,7 @@ import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-//import br.ufla.zetta.backstage_api.dto.LoginRequest;
+import br.ufla.zetta.backstage_api.dto.LoginRequest;
 
 @RestController
 @RequestMapping("/api/usuarios")
@@ -31,9 +31,9 @@ public class UsuarioController {
         return ResponseEntity.ok(usuarioService.buscarPorId(id));
     }
 
-    /*@PostMapping("/login")
+    @PostMapping("/login")
     public ResponseEntity<Usuario> login(@RequestBody LoginRequest loginRequest) {
         Usuario usuarioLogado = usuarioService.autenticar(loginRequest.email(), loginRequest.senha());
         return ResponseEntity.ok(usuarioLogado);
-    }*/
+    }
 }
