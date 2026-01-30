@@ -24,13 +24,17 @@ public class EventoService {
     @Transactional
     public Evento criarEvento(Evento evento, Long usuarioId) {
         Usuario produtor = usuarioRepository.findById(usuarioId)
-            .orElseThrow(() -> new RecursoNaoEncontradoException("Produtor não encontrado com ID: " + usuarioId));
+            .orElseThrow(() -> new RecursoNaoEncontradoException("Produtor não encontrado."));
         
         evento.setOrganizador(produtor);
+        
         return eventoRepository.save(evento);
     }
 
     public List<Evento> listarEventosDoProdutor(Long usuarioId) {
+        if (!usuarioRepository.existsById(usuarioId)) {
+            throw new RecursoNaoEncontradoException("Produtor não encontrado.");
+        }
         return eventoRepository.findByOrganizadorId(usuarioId);
     }
 }
