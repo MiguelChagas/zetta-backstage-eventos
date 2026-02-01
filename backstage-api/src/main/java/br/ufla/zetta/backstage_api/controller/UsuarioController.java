@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import br.ufla.zetta.backstage_api.dto.LoginRequest;
 
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/api/usuarios")
 @Tag(name = "Usuários", description = "Gerenciamento de usuários")
