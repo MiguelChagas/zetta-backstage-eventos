@@ -21,34 +21,30 @@ public class ItemChecklistService {
         this.itemRepository = itemRepository;
         this.eventoRepository = eventoRepository;
     }
-
+    
     @Transactional
     public ItemChecklist adicionarItem(ItemChecklist item, Long eventoId) {
         Evento evento = eventoRepository.findById(eventoId)
             .orElseThrow(() -> new RecursoNaoEncontradoException("Evento não encontrado."));
         
         item.setEvento(evento);
-        item.setStatus(StatusItem.PENDENTE);
+        item.setStatus(StatusItem.PENDENTE); 
         return itemRepository.save(item);
     }
 
     public List<ItemChecklist> listarItensDoEvento(Long eventoId) {
+        if (!eventoRepository.existsById(eventoId)) {
+            throw new RecursoNaoEncontradoException("Evento não encontrado.");
+        }
         return itemRepository.findByEventoId(eventoId);
     }
 
     @Transactional
     public ItemChecklist atualizarStatus(Long itemId, StatusItem novoStatus) {
         ItemChecklist item = itemRepository.findById(itemId)
-            .orElseThrow(() -> new RecursoNaoEncontradoException("Item não encontrado."));
+            .orElseThrow(() -> new RecursoNaoEncontradoException("Item de checklist não encontrado."));
             
         item.setStatus(novoStatus);
         return itemRepository.save(item);
-    }
-    
-    public void excluirItem(Long itemId) {
-        if (!itemRepository.existsById(itemId)) {
-            throw new RecursoNaoEncontradoException("Item não encontrado para exclusão.");
-        }
-        itemRepository.deleteById(itemId);
     }
 }
