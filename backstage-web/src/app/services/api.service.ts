@@ -10,13 +10,39 @@ export class ApiService {
 
   constructor(private http: HttpClient) {}
 
-  getEventos(usuarioId: number = 1): Observable<any[]> {
+  cadastrar(usuario: any): Observable<any> {
+    return this.http.post(`${this.baseUrl}/usuarios`, usuario);
+  }
+
+  login(loginData: any): Observable<any> {
+    return this.http.post(`${this.baseUrl}/usuarios/login`, loginData);
+  }
+
+  getEventos(usuarioId: number): Observable<any[]> {
     return this.http.get<any[]>(
       `${this.baseUrl}/eventos/produtor/${usuarioId}`,
     );
   }
 
+  criarEvento(evento: any, usuarioId: number): Observable<any> {
+    return this.http.post(
+      `${this.baseUrl}/eventos?usuarioId=${usuarioId}`,
+      evento,
+    );
+  }
+
   getTarefas(eventoId: number): Observable<any[]> {
     return this.http.get<any[]>(`${this.baseUrl}/itens/evento/${eventoId}`);
+  }
+
+  adicionarTarefa(tarefa: any, eventoId: number): Observable<any> {
+    return this.http.post(`${this.baseUrl}/itens?eventoId=${eventoId}`, tarefa);
+  }
+
+  atualizarStatus(itemId: number, novoStatus: string): Observable<any> {
+    return this.http.patch(
+      `${this.baseUrl}/itens/${itemId}/status?status=${novoStatus}`,
+      {},
+    );
   }
 }

@@ -1,0 +1,74 @@
+<div class="d-flex justify-content-center align-items-center vh-100 bg-dark">
+  <div
+    class="card p-4 shadow-lg border-0"
+    style="width: 400px; background-color: #212529; color: white"
+  >
+    <div class="text-center mb-4">
+      <h1 class="h3 mb-2 fw-bold text-primary">🎸 Criar Conta</h1>
+      <p class="text-muted small">Junte-se ao Backstage Eventos</p>
+    </div>
+
+    <form (ngSubmit)="fazerCadastro()" #form="ngForm">
+      <div class="form-floating mb-3">
+        <input
+          type="text"
+          class="form-control bg-dark text-light border-secondary"
+          id="nome"
+          [(ngModel)]="usuario.nome"
+          name="nome"
+          placeholder="Seu Nome"
+          required
+        />
+        <label for="nome" class="text-secondary">Nome Completo</label>
+      </div>
+
+      <div class="form-floating mb-3">
+        <input
+          type="email"
+          class="form-control bg-dark text-light border-secondary"
+          id="email"
+          [(ngModel)]="usuario.email"
+          name="email"
+          placeholder="nome@exemplo.com"
+          required
+        />
+        <label for="email" class="text-secondary">Email</label>
+      </div>
+
+      <div class="form-floating mb-3">
+        <input
+          type="password"
+          class="form-control bg-dark text-light border-secondary"
+          id="senha"
+          [(ngModel)]="usuario.senha"
+          name="senha"
+          placeholder="Senha"
+          required
+          minlength="6"
+        />
+        <label for="senha" class="text-secondary">Senha (mín. 6 dígitos)</label>
+      </div>
+
+      <button
+        class="w-100 btn btn-lg btn-primary mb-3"
+        type="submit"
+        [disabled]="!form.valid"
+      >
+        Cadastrar
+      </button>
+
+      <div class="text-center">
+        <a routerLink="/login" class="text-decoration-none text-light small">
+          Já tem uma conta? <span class="text-primary">Faça Login</span>
+        </a>
+      </div>
+    </form>
+
+    <div
+      *ngIf="msgErro"
+      class="alert alert-danger mt-3 py-2 text-center small border-0"
+    >
+      {{ msgErro }}
+    </div>
+  </div>
+</div>
