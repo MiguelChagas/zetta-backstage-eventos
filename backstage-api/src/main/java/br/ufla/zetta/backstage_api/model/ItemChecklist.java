@@ -16,7 +16,6 @@ public class ItemChecklist {
     @NotBlank
     private String nome;
 
-    @NotBlank
     private String descricao;
 
     @Enumerated(EnumType.STRING)

@@ -1,1 +1,56 @@
-<p>login works!</p>
+<div class="d-flex justify-content-center align-items-center vh-100 bg-dark">
+  <div
+    class="card p-4 shadow-lg border-0"
+    style="width: 350px; background-color: #212529; color: white"
+  >
+    <div class="text-center mb-4">
+      <div class="mb-3 display-4">🎸</div>
+      <h1 class="h3 mb-3 fw-normal">Login do Produtor</h1>
+    </div>
+
+    <form (ngSubmit)="fazerLogin()">
+      <div class="form-floating mb-3">
+        <input
+          type="email"
+          class="form-control bg-dark text-light border-secondary"
+          id="email"
+          [(ngModel)]="email"
+          name="email"
+          placeholder="nome@exemplo.com"
+          required
+        />
+        <label for="email" class="text-secondary">Email</label>
+      </div>
+
+      <div class="form-floating mb-3">
+        <input
+          type="password"
+          class="form-control bg-dark text-light border-secondary"
+          id="senha"
+          [(ngModel)]="senha"
+          name="senha"
+          placeholder="Senha"
+          required
+        />
+        <label for="senha" class="text-secondary">Senha</label>
+      </div>
+
+      <button class="w-100 btn btn-lg btn-primary mb-3" type="submit">
+        Entrar
+      </button>
+
+      <div class="text-center">
+        <a routerLink="/cadastro" class="text-decoration-none text-light small">
+          Não tem conta? <span class="text-primary">Cadastre-se</span>
+        </a>
+      </div>
+    </form>
+
+    <div
+      *ngIf="erro"
+      class="alert alert-danger mt-3 py-2 text-center small border-0"
+    >
+      {{ erro }}
+    </div>
+  </div>
+</div>

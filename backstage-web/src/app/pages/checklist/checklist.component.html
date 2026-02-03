@@ -1,1 +1,111 @@
-<p>checklist works!</p>
+<nav class="navbar navbar-dark bg-dark mb-4 px-4">
+  <div class="container-fluid">
+    <a class="btn btn-outline-light btn-sm" routerLink="/dashboard">
+      ⬅ Voltar
+    </a>
+    <span class="navbar-brand mb-0 h1 mx-auto">{{ evento?.nome }}</span>
+    <span class="badge bg-secondary">{{ tarefas.length }} Tarefas</span>
+  </div>
+</nav>
+
+<div class="container">
+  <div class="card shadow-sm border-0 mb-4 bg-light">
+    <div class="card-body">
+      <h5 class="card-title mb-3 text-primary">📝 Adicionar Tarefa</h5>
+      <div class="row g-2">
+        <div class="col-md-5">
+          <input
+            type="text"
+            class="form-control"
+            placeholder="O que precisa ser feito?"
+            [(ngModel)]="novaTarefa.nome"
+          />
+        </div>
+
+        <div class="col-md-3">
+          <select class="form-select" [(ngModel)]="novaTarefa.prioridade">
+            <option value="ALTA">🔥 Alta Prioridade</option>
+            <option value="MEDIA">⚠️ Média Prioridade</option>
+            <option value="BAIXA">☕ Baixa Prioridade</option>
+          </select>
+        </div>
+
+        <div class="col-md-2">
+          <input
+            type="datetime-local"
+            class="form-control"
+            [(ngModel)]="novaTarefa.dataLimite"
+          />
+        </div>
+
+        <div class="col-md-2">
+          <button
+            class="btn btn-primary w-100 fw-bold"
+            (click)="adicionarTarefa()"
+            [disabled]="!novaTarefa.nome"
+          >
+            Adicionar
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="list-group shadow-sm">
+    <div
+      *ngFor="let item of tarefas"
+      class="list-group-item list-group-item-action d-flex justify-content-between align-items-center p-3"
+      [class.bg-light]="item.status === 'CONCLUIDO'"
+      style="transition: all 0.2s"
+    >
+      <div>
+        <div class="d-flex align-items-center gap-2 mb-1">
+          <span *ngIf="item.status === 'CONCLUIDO'" class="text-success fs-5"
+            >✅</span
+          >
+          <span *ngIf="item.status === 'PENDENTE'" class="text-secondary fs-5"
+            >⬜</span
+          >
+
+          <h5
+            class="mb-0 fw-bold"
+            [class.text-decoration-line-through]="item.status === 'CONCLUIDO'"
+            [class.text-muted]="item.status === 'CONCLUIDO'"
+          >
+            {{ item.nome }}
+          </h5>
+
+          <span
+            class="badge rounded-pill"
+            [ngClass]="{
+              'bg-danger': item.prioridade === 'ALTA',
+              'bg-warning text-dark': item.prioridade === 'MEDIA',
+              'bg-info text-dark': item.prioridade === 'BAIXA',
+            }"
+          >
+            {{ item.prioridade }}
+          </span>
+        </div>
+
+        <small class="text-muted">
+          📅 Prazo: {{ item.dataLimite | date: "dd/MM/yyyy HH:mm" }}
+        </small>
+      </div>
+
+      <button
+        class="btn btn-sm px-3 rounded-pill"
+        [ngClass]="
+          item.status === 'CONCLUIDO' ? 'btn-outline-secondary' : 'btn-success'
+        "
+        (click)="alternarStatus(item)"
+      >
+        {{ item.status === "CONCLUIDO" ? "Reabrir Tarefa" : "Concluir" }}
+      </button>
+    </div>
+  </div>
+
+  <div *ngIf="tarefas.length === 0" class="text-center mt-5 text-muted">
+    <h3 class="display-6">Nada por aqui... 🍃</h3>
+    <p>Adicione a primeira tarefa acima para começar o trabalho!</p>
+  </div>
+</div>

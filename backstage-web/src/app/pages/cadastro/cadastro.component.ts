@@ -18,13 +18,13 @@ export class CadastroComponent {
 
   fazerCadastro() {
     this.api.cadastrar(this.usuario).subscribe({
-      next: (resposta) => {
-        alert('Conta criada com sucesso! Faça login para continuar.');
+      next: () => {
+        alert('Conta criada com sucesso! Faça login.');
         this.router.navigate(['/login']);
       },
-      error: (erro) => {
-        this.msgErro =
-          erro.error?.message || 'Erro ao cadastrar. Tente outro email.';
+      error: (e) => {
+        this.msgErro = 'Erro ao cadastrar. Tente outro email.';
+        console.error(e);
       },
     });
   }

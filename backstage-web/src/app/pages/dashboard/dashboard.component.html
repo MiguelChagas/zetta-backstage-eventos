@@ -1,1 +1,85 @@
-<p>dashboard works!</p>
+<nav class="navbar navbar-dark bg-dark mb-4 px-4">
+  <span class="navbar-brand">🎸 Meus Eventos</span>
+  <div class="d-flex align-items-center">
+    <span class="text-light me-3" *ngIf="usuario">Olá, {{ usuario.nome }}</span>
+    <button class="btn btn-outline-light btn-sm" (click)="sair()">Sair</button>
+  </div>
+</nav>
+
+<div class="container">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h2>Agenda de Produção</h2>
+    <button class="btn btn-success" (click)="toggleForm()">
+      + Novo Evento
+    </button>
+  </div>
+
+  <div
+    class="card p-4 mb-4 bg-light border-0 shadow-sm"
+    *ngIf="mostrandoFormulario"
+  >
+    <h4 class="mb-3">Novo Evento</h4>
+    <div class="row g-2">
+      <div class="col-md-4">
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Nome do Show"
+          [(ngModel)]="novoEvento.nome"
+        />
+      </div>
+      <div class="col-md-3">
+        <input
+          type="date"
+          class="form-control"
+          [(ngModel)]="novoEvento.dataEvento"
+        />
+      </div>
+      <div class="col-md-3">
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Local (Ex: Arena Zetta)"
+          [(ngModel)]="novoEvento.localizacao"
+        />
+      </div>
+      <div class="col-md-2">
+        <button class="btn btn-primary w-100" (click)="salvarEvento()">
+          Salvar
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="row row-cols-1 row-cols-md-3 g-4">
+    <div class="col" *ngFor="let evento of eventos">
+      <div
+        class="card h-100 shadow-sm border-0 hover-card"
+        (click)="abrirEvento(evento)"
+        style="cursor: pointer; transition: transform 0.2s"
+      >
+        <div class="card-body">
+          <div class="d-flex justify-content-between align-items-start">
+            <h5 class="card-title text-primary">{{ evento.nome }}</h5>
+            <span class="badge bg-secondary">{{
+              evento.dataEvento | date: "dd/MM"
+            }}</span>
+          </div>
+          <h6 class="card-subtitle mb-2 text-muted mt-2">
+            📍 {{ evento.localizacao }}
+          </h6>
+          <p class="card-text mt-3 text-muted small">
+            Clique para ver o checklist
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div
+    *ngIf="eventos.length === 0"
+    class="alert alert-warning mt-4 text-center"
+  >
+    Nenhum evento encontrado. Crie seu primeiro show acima! ☝️
+  </div>
+</div>
