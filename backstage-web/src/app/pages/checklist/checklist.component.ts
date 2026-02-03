@@ -12,7 +12,13 @@ export class ChecklistComponent implements OnInit {
   evento: any = { nome: 'Carregando...' };
   tarefas: any[] = [];
 
-  novaTarefa = { nome: '', prioridade: 'MEDIA', dataLimite: '' };
+  novaTarefa = {
+    nome: '',
+    prioridade: 'MEDIA',
+    dataLimite: '',
+    categoria: 'GERAL',
+    descricao: '',
+  };
 
   constructor(
     private route: ActivatedRoute,
@@ -59,6 +65,8 @@ export class ChecklistComponent implements OnInit {
       next: () => {
         this.novaTarefa.nome = '';
         this.novaTarefa.dataLimite = '';
+        this.novaTarefa.descricao = '';
+        this.novaTarefa.categoria = 'GERAL';
         this.carregarTarefas();
       },
       error: (e) => {
