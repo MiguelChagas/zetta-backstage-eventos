@@ -56,6 +56,22 @@ export class DashboardComponent implements OnInit {
     });
   }
 
+  deletarEvento(evento: any, $event: Event) {
+    $event.stopPropagation();
+
+    if (!confirm(`Tem certeza que deseja deletar o evento "${evento.nome}"?`)) {
+      return;
+    }
+
+    this.api.deletarEvento(evento.id).subscribe({
+      next: () => {
+        this.carregarEventos();
+        alert('Evento deletado com sucesso!');
+      },
+      error: () => alert('Erro ao deletar evento.'),
+    });
+  }
+
   sair() {
     localStorage.clear();
     this.router.navigate(['/login']);
