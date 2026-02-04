@@ -37,4 +37,12 @@ public class EventoService {
         }
         return eventoRepository.findByOrganizadorId(usuarioId);
     }
+
+    @Transactional
+    public void deletarEvento(Long eventoId) {
+        if (!eventoRepository.existsById(eventoId)) {
+            throw new RecursoNaoEncontradoException("Evento não encontrado.");
+        }
+        eventoRepository.deleteById(eventoId);
+    }
 }

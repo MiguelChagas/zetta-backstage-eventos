@@ -36,4 +36,10 @@ public class ItemChecklistController {
         ItemChecklist itemAtualizado = itemService.atualizarStatus(id, status);
         return ResponseEntity.ok(itemAtualizado);
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deletarItem(@PathVariable Long id) {
+        itemService.deletarItem(id);
+        return ResponseEntity.noContent().build();
+    }
 }

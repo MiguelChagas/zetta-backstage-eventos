@@ -29,4 +29,10 @@ public class EventoController {
     public ResponseEntity<List<Evento>> listarEventos(@PathVariable Long usuarioId) {
         return ResponseEntity.ok(eventoService.listarEventosDoProdutor(usuarioId));
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deletarEvento(@PathVariable Long id) {
+        eventoService.deletarEvento(id);
+        return ResponseEntity.noContent().build();
+    }
 }

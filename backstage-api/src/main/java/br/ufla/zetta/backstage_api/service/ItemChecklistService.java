@@ -47,4 +47,12 @@ public class ItemChecklistService {
         item.setStatus(novoStatus);
         return itemRepository.save(item);
     }
+
+    @Transactional
+    public void deletarItem(Long itemId) {
+        if (!itemRepository.existsById(itemId)) {
+            throw new RecursoNaoEncontradoException("Item de checklist não encontrado.");
+        }
+        itemRepository.deleteById(itemId);
+    }
 }
