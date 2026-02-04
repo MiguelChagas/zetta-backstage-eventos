@@ -43,35 +43,37 @@ export class ChecklistComponent implements OnInit {
           a.status === b.status ? 0 : a.status === 'PENDENTE' ? -1 : 1,
         );
       },
-      error: (e) => {
-        console.error('Erro ao carregar tarefas', e);
-        alert('Erro no servidor ao buscar tarefas.');
-        this.tarefas = [];
-      },
+      error: (e) => console.error('Erro ao carregar tarefas', e),
     });
   }
 
   adicionarTarefa() {
     if (!this.novaTarefa.nome) return;
 
-    const tarefaParaEnviar = {
-      nome: this.novaTarefa.nome,
-      descricao: '',
-      prioridade: this.novaTarefa.prioridade,
-      dataLimite: this.novaTarefa.dataLimite || null,
-    };
+    const tarefaParaEnviar: any = { ...this.novaTarefa };
+
+    if (tarefaParaEnviar.dataLimite) {
+      if (tarefaParaEnviar.dataLimite.length === 16) {
+        tarefaParaEnviar.dataLimite += ':00';
+      }
+    } else {
+      tarefaParaEnviar.dataLimite = null;
+    }
 
     this.api.adicionarTarefa(tarefaParaEnviar, this.eventoId).subscribe({
       next: () => {
-        this.novaTarefa.nome = '';
-        this.novaTarefa.dataLimite = '';
-        this.novaTarefa.descricao = '';
-        this.novaTarefa.categoria = 'GERAL';
+        this.novaTarefa = {
+          nome: '',
+          prioridade: 'MEDIA',
+          dataLimite: '',
+          categoria: 'GERAL',
+          descricao: '',
+        };
         this.carregarTarefas();
       },
       error: (e) => {
-        console.error(e);
-        alert('Erro ao adicionar tarefa.');
+        console.error('Erro ao criar tarefa:', e);
+        alert('Erro ao criar tarefa. Verifique o console.');
       },
     });
   }
