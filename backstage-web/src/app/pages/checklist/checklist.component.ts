@@ -73,7 +73,7 @@ export class ChecklistComponent implements OnInit {
       },
       error: (e) => {
         console.error('Erro ao criar tarefa:', e);
-        alert('Erro ao criar tarefa. Verifique o console.');
+        alert('Erro ao criar tarefa.');
       },
     });
   }
@@ -86,6 +86,19 @@ export class ChecklistComponent implements OnInit {
         item.status = novoStatus;
       },
       error: (e) => alert('Erro ao atualizar status.'),
+    });
+  }
+
+  deletarItem(item: any) {
+    if (!confirm(`Tem certeza que deseja deletar "${item.nome}"?`)) {
+      return;
+    }
+
+    this.api.deletarItem(item.id).subscribe({
+      next: () => {
+        this.carregarTarefas();
+      },
+      error: () => alert('Erro ao deletar item.'),
     });
   }
 }

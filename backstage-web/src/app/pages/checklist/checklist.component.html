@@ -133,15 +133,25 @@
         </small>
       </div>
 
-      <button
-        class="btn btn-sm px-3 rounded-pill text-nowrap mt-2"
-        [ngClass]="
-          item.status === 'CONCLUIDO' ? 'btn-outline-secondary' : 'btn-success'
-        "
-        (click)="alternarStatus(item)"
-      >
-        {{ item.status === "CONCLUIDO" ? "Reabrir" : "Concluir" }}
-      </button>
+      <div class="d-flex flex-column gap-2">
+        <button
+          class="btn btn-sm px-3 rounded-pill text-nowrap"
+          [ngClass]="
+            item.status === 'CONCLUIDO'
+              ? 'btn-outline-secondary'
+              : 'btn-success'
+          "
+          (click)="alternarStatus(item)"
+        >
+          {{ item.status === "CONCLUIDO" ? "Reabrir" : "Concluir" }}
+        </button>
+        <button
+          class="btn btn-sm btn-outline-danger px-3 rounded-pill text-nowrap"
+          (click)="deletarItem(item)"
+        >
+          🗑️ Deletar
+        </button>
+      </div>
     </div>
   </div>
 

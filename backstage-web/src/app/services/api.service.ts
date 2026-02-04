@@ -45,4 +45,12 @@ export class ApiService {
       {},
     );
   }
+
+  deletarEvento(eventoId: number): Observable<any> {
+    return this.http.delete(`${this.baseUrl}/eventos/${eventoId}`);
+  }
+
+  deletarItem(itemId: number): Observable<any> {
+    return this.http.delete(`${this.baseUrl}/itens/${itemId}`);
+  }
 }
