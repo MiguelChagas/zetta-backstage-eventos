@@ -31,8 +31,27 @@ export class ApiService {
     );
   }
 
-  getTarefas(eventoId: number): Observable<any[]> {
-    return this.http.get<any[]>(`${this.baseUrl}/itens/evento/${eventoId}`);
+  getTarefas(
+    eventoId: number,
+    status?: string,
+    categoria?: string,
+  ): Observable<any[]> {
+    let url = `${this.baseUrl}/itens/evento/${eventoId}`;
+    const params: string[] = [];
+
+    if (status && status !== 'TODOS') {
+      params.push(`status=${status}`);
+    }
+
+    if (categoria && categoria !== 'TODOS') {
+      params.push(`categoria=${categoria}`);
+    }
+
+    if (params.length > 0) {
+      url += '?' + params.join('&');
+    }
+
+    return this.http.get<any[]>(url);
   }
 
   adicionarTarefa(tarefa: any, eventoId: number): Observable<any> {

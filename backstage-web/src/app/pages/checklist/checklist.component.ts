@@ -12,6 +12,10 @@ export class ChecklistComponent implements OnInit {
   evento: any = { nome: 'Carregando...' };
   tarefas: any[] = [];
 
+  // Filtros
+  filtroStatus: string = 'TODOS';
+  filtroCategoria: string = 'TODOS';
+
   novaTarefa = {
     nome: '',
     prioridade: 'MEDIA',
@@ -37,14 +41,26 @@ export class ChecklistComponent implements OnInit {
   }
 
   carregarTarefas() {
-    this.api.getTarefas(this.eventoId).subscribe({
-      next: (dados) => {
-        this.tarefas = dados.sort((a, b) =>
-          a.status === b.status ? 0 : a.status === 'PENDENTE' ? -1 : 1,
-        );
-      },
-      error: (e) => console.error('Erro ao carregar tarefas', e),
-    });
+    this.api
+      .getTarefas(this.eventoId, this.filtroStatus, this.filtroCategoria)
+      .subscribe({
+        next: (dados) => {
+          this.tarefas = dados.sort((a, b) =>
+            a.status === b.status ? 0 : a.status === 'PENDENTE' ? -1 : 1,
+          );
+        },
+        error: (e) => console.error('Erro ao carregar tarefas', e),
+      });
+  }
+
+  aplicarFiltro() {
+    this.carregarTarefas();
+  }
+
+  limparFiltros() {
+    this.filtroStatus = 'TODOS';
+    this.filtroCategoria = 'TODOS';
+    this.carregarTarefas();
   }
 
   adicionarTarefa() {

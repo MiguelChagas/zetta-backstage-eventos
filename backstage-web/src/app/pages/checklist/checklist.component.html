@@ -73,6 +73,67 @@
     </div>
   </div>
 
+  <!-- Seção de Filtros -->
+  <div class="card shadow-sm border-0 mb-4">
+    <div class="card-body">
+      <h5 class="card-title mb-3 text-info">🔍 Filtrar Tarefas</h5>
+
+      <div class="row g-2">
+        <div class="col-md-4">
+          <label class="form-label small fw-bold">Status:</label>
+          <select
+            class="form-select"
+            [(ngModel)]="filtroStatus"
+            (change)="aplicarFiltro()"
+          >
+            <option value="TODOS">📋 Todos</option>
+            <option value="PENDENTE">⬜ Pendentes</option>
+            <option value="CONCLUIDO">✅ Concluídas</option>
+          </select>
+        </div>
+
+        <div class="col-md-5">
+          <label class="form-label small fw-bold">Categoria:</label>
+          <select
+            class="form-select"
+            [(ngModel)]="filtroCategoria"
+            (change)="aplicarFiltro()"
+          >
+            <option value="TODOS">📂 Todas</option>
+            <option value="GERAL">📂 Geral</option>
+            <option value="SOM">🔊 Som</option>
+            <option value="LUZ">💡 Iluminação</option>
+            <option value="PALCO">🏗️ Palco</option>
+            <option value="LOGISTICA">🚚 Logística</option>
+          </select>
+        </div>
+
+        <div class="col-md-3 d-flex align-items-end">
+          <button
+            class="btn btn-outline-secondary w-100"
+            (click)="limparFiltros()"
+            [disabled]="filtroStatus === 'TODOS' && filtroCategoria === 'TODOS'"
+          >
+            🔄 Limpar Filtros
+          </button>
+        </div>
+      </div>
+
+      <div
+        class="mt-2 text-muted small"
+        *ngIf="filtroStatus !== 'TODOS' || filtroCategoria !== 'TODOS'"
+      >
+        <strong>Filtros ativos:</strong>
+        <span *ngIf="filtroStatus !== 'TODOS'" class="badge bg-primary ms-1">{{
+          filtroStatus
+        }}</span>
+        <span *ngIf="filtroCategoria !== 'TODOS'" class="badge bg-info ms-1">{{
+          filtroCategoria
+        }}</span>
+      </div>
+    </div>
+  </div>
+
   <div class="list-group shadow-sm">
     <div
       *ngFor="let item of tarefas"
