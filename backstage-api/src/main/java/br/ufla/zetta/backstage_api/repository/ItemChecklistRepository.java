@@ -14,4 +14,8 @@ public interface ItemChecklistRepository extends JpaRepository<ItemChecklist, Lo
     List<ItemChecklist> findByEventoIdAndStatus(Long eventoId, br.ufla.zetta.backstage_api.model.StatusItem status);
 
     List<ItemChecklist> findByEventoIdAndPrioridade(Long eventoId, br.ufla.zetta.backstage_api.model.Prioridade prioridade);
+
+    List<ItemChecklist> findByEventoIdAndCategoria(Long eventoId, String categoria);
+
+    List<ItemChecklist> findByEventoIdAndStatusAndCategoria(Long eventoId, br.ufla.zetta.backstage_api.model.StatusItem status, String categoria);
 }

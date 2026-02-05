@@ -39,6 +39,27 @@ public class ItemChecklistService {
         return itemRepository.findByEventoId(eventoId);
     }
 
+    public List<ItemChecklist> listarItensPorStatus(Long eventoId, StatusItem status) {
+        if (!eventoRepository.existsById(eventoId)) {
+            throw new RecursoNaoEncontradoException("Evento não encontrado.");
+        }
+        return itemRepository.findByEventoIdAndStatus(eventoId, status);
+    }
+
+    public List<ItemChecklist> listarItensPorCategoria(Long eventoId, String categoria) {
+        if (!eventoRepository.existsById(eventoId)) {
+            throw new RecursoNaoEncontradoException("Evento não encontrado.");
+        }
+        return itemRepository.findByEventoIdAndCategoria(eventoId, categoria);
+    }
+
+    public List<ItemChecklist> listarItensComFiltros(Long eventoId, StatusItem status, String categoria) {
+        if (!eventoRepository.existsById(eventoId)) {
+            throw new RecursoNaoEncontradoException("Evento não encontrado.");
+        }
+        return itemRepository.findByEventoIdAndStatusAndCategoria(eventoId, status, categoria);
+    }
+
     @Transactional
     public ItemChecklist atualizarStatus(Long itemId, StatusItem novoStatus) {
         ItemChecklist item = itemRepository.findById(itemId)
