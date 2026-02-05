@@ -165,6 +165,9 @@ docker-compose up -d
 
 Se você quiser testar a API direto (Postman, Insomnia, cURL):
 
+**Nota:** Os exemplos abaixo utilizam a sintaxe padrão **Bash** (Linux/macOS/Git Bash).
+Caso esteja executando via **Prompt de Comando (CMD)** ou **PowerShell** no Windows, atente-se à necessidade de escapar aspas duplas no JSON (ex: `\"chave\": \"valor\"`) ou utilize uma ferramenta gráfica como Postman.
+
 ### Usuários
 
 ```bash
@@ -327,5 +330,3 @@ E é isso! Você tem um sistema completo de gerenciamento de eventos, de ponta a
 Espero que você goste do projeto! Se tiver qualquer dúvida, é só perguntar. 😊
 
 ---
-
-**Feito com ☕ e muito código!**
